@@ -3,199 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome Business - Investment Platform</title>
+    <title>Welcome Business - Secure Investment</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Simple Home Page Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #4caf50, #2ed573);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+        
+        .contact-bar {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-chart-line"></i>
             <span>Welcome Business</span>
         </div>
         <ul class="nav-links">
-            <li><a href="index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
             <li><a href="deposit.html"><i class="fas fa-money-bill-transfer"></i> Deposit</a></li>
             <li><a href="balance.html"><i class="fas fa-wallet"></i> My Balance</a></li>
-            <li><a href="admin.html"><i class="fas fa-user-shield"></i> Admin</a></li>
         </ul>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
-            <h1><i class="fas fa-handshake"></i> Welcome to Secure Investment</h1>
-            <p class="subtitle">Grow your wealth with our trusted investment platform</p>
-            <div class="hero-stats">
-                <div class="stat">
-                    <h3>$2.5M+</h3>
-                    <p>Total Investments</p>
-                </div>
-                <div class="stat">
-                    <h3>1,200+</h3>
-                    <p>Happy Investors</p>
-                </div>
-                <div class="stat">
-                    <h3>24/7</h3>
-                    <p>Support Available</p>
-                </div>
-            </div>
-            <a href="deposit.html" class="cta-btn">
-                <i class="fas fa-rocket"></i> Start Investing Now
+        <h1>Grow Your Wealth Securely</h1>
+        <p>Invest with confidence and watch your money grow with our trusted investment platform.</p>
+        
+        <div class="cta-buttons">
+            <a href="deposit.html" class="btn btn-primary">
+                <i class="fas fa-rocket"></i> Start Investing
+            </a>
+            <a href="balance.html" class="btn btn-secondary">
+                <i class="fas fa-wallet"></i> Check Balance
             </a>
         </div>
     </section>
 
-    <!-- How It Works -->
-    <section class="how-it-works">
-        <h2>How It Works</h2>
-        <div class="steps-container">
-            <div class="step">
-                <div class="step-icon">
-                    <i class="fas fa-wallet"></i>
-                </div>
-                <h3>1. Deposit USDT</h3>
-                <p>Send USDT to our TRC20 address</p>
-                <div class="step-detail">
-                    <code>TDVgjumBKBZAG3AdKwnV7q9QJfQUzCEBNJ</code>
-                </div>
+    <!-- Features -->
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-shield-alt"></i>
             </div>
-            
-            <div class="step">
-                <div class="step-icon">
-                    <i class="fas fa-screenshot"></i>
-                </div>
-                <h3>2. Send Proof</h3>
-                <p>Send transaction screenshot on WhatsApp</p>
-                <div class="step-detail">
-                    <a href="https://wa.me/18624843253" class="whatsapp-link">
-                        <i class="fab fa-whatsapp"></i> +1 (862) 484-3253
-                    </a>
-                </div>
-            </div>
-            
-            <div class="step">
-                <div class="step-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h3>3. Get Approved</h3>
-                <p>We verify and approve within 2-6 hours</p>
-                <div class="step-detail">
-                    <p><i class="fas fa-clock"></i> Fast Processing</p>
-                </div>
-            </div>
-            
-            <div class="step">
-                <div class="step-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3>4. Track Growth</h3>
-                <p>Monitor your investment growth daily</p>
-                <div class="step-detail">
-                    <p><i class="fas fa-chart-bar"></i> Live Updates</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Investment Plans -->
-    <section class="plans">
-        <h2>Investment Plans</h2>
-        <div class="plans-container">
-            <div class="plan-card">
-                <div class="plan-header">
-                    <h3>Basic</h3>
-                    <div class="plan-price">$50 - $499</div>
-                </div>
-                <ul class="plan-features">
-                    <li><i class="fas fa-check"></i> 3-5% Monthly Return</li>
-                    <li><i class="fas fa-check"></i> 24/7 Support</li>
-                    <li><i class="fas fa-check"></i> Daily Updates</li>
-                    <li><i class="fas fa-check"></i> Secure Platform</li>
-                </ul>
-                <a href="deposit.html" class="plan-btn">Get Started</a>
-            </div>
-            
-            <div class="plan-card popular">
-                <div class="plan-badge">Most Popular</div>
-                <div class="plan-header">
-                    <h3>Professional</h3>
-                    <div class="plan-price">$500 - $4,999</div>
-                </div>
-                <ul class="plan-features">
-                    <li><i class="fas fa-check"></i> 5-8% Monthly Return</li>
-                    <li><i class="fas fa-check"></i> Priority Support</li>
-                    <li><i class="fas fa-check"></i> Weekly Reports</li>
-                    <li><i class="fas fa-check"></i> Personal Manager</li>
-                </ul>
-                <a href="deposit.html" class="plan-btn">Get Started</a>
-            </div>
-            
-            <div class="plan-card">
-                <div class="plan-header">
-                    <h3>VIP</h3>
-                    <div class="plan-price">$5,000+</div>
-                </div>
-                <ul class="plan-features">
-                    <li><i class="fas fa-check"></i> 8-12% Monthly Return</li>
-                    <li><i class="fas fa-check"></i> 24/7 Dedicated Support</li>
-                    <li><i class="fas fa-check"></i> Custom Strategies</li>
-                    <li><i class="fas fa-check"></i> Withdrawal Priority</li>
-                </ul>
-                <a href="deposit.html" class="plan-btn">Get Started</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Info -->
-    <section class="contact-info">
-        <div class="contact-card">
-            <div class="contact-icon">
-                <i class="fab fa-whatsapp"></i>
-            </div>
-            <div class="contact-details">
-                <h3>WhatsApp Support</h3>
-                <p>+1 (862) 484-3253</p>
-                <p>Available 24/7 for deposit verification</p>
-            </div>
-            <a href="https://wa.me/18624843253" class="contact-btn" target="_blank">
-                <i class="fab fa-whatsapp"></i> Message Now
-            </a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3><i class="fas fa-building"></i> Welcome Business</h3>
-                <p>Secure investment platform with transparent returns.</p>
-            </div>
-            
-            <div class="footer-section">
-                <h3><i class="fas fa-link"></i> Quick Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="deposit.html">Deposit</a></li>
-                    <li><a href="balance.html">My Balance</a></li>
-                    <li><a href="admin.html">Admin</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3><i class="fas fa-address-card"></i> Contact</h3>
-                <p><i class="fab fa-whatsapp"></i> +1 (862) 484-3253</p>
-                <p><i class="fas fa-wallet"></i> TRC20: TDVgjumBKBZAG3AdKwnV7q9QJfQUzCEBNJ</p>
-            </div>
+            <h3>Secure Investments</h3>
+            <p>Your funds are protected with advanced security measures.</p>
         </div>
         
-        <div class="footer-bottom">
-            <p>&copy; 2024 Welcome Business. All rights reserved.</p>
-            <p class="disclaimer">Investments involve risk. Past performance doesn't guarantee future results.</p>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Guaranteed Returns</h3>
+            <p>Consistent and reliable returns on your investments.</p>
         </div>
-    </footer>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-headset"></i>
+            </div>
+            <h3>24/7 Support</h3>
+            <p>Dedicated support team always available to help you.</p>
+        </div>
+    </section>
 
-    <script src="script.js"></script>
+    <!-- Contact -->
+    <section class="contact-bar">
+        <h2>Need Help? WhatsApp Us</h2>
+        <p>We're here to help you with any questions</p>
+        <a href="https://wa.me/18624843253" class="whatsapp-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i> +1 (862) 484-3253
+        </a>
+    </section>
+
+    <script>
+        // Simple initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Welcome Business - Home Page");
+        });
+    </script>
 </body>
 </html>
