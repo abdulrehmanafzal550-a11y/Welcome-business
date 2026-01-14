@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Welcome Business</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Simple Admin Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f5f7fa;
+            color: #333;
+        }
+        
+        /* Login Screen */
+        .login-screen {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a237e, #283593);
+        }
+        
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        .login-box h1 {
+            color: #1a237e;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .login-box p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+        
+        .login-box input {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .login-box input:focus {
+            border-color: #1a237e;
+            outline: none;
+        }
+        
+        .login-btn {
+            width: 100%;
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        
+        .login-btn:hover {
+            background: #283593;
+        }
+        
+        .login-message {
+            margin-top: 15px;
+            min-height: 20px;
+            color: #ff4757;
+            font-size: 0.9rem;
+        }
+        
+        /* Admin Dashboard */
+        .admin-dashboard {
+            display: none;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #1a237e, #283593);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        /* Dashboard Content */
+        .dashboard-content {
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .logout-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 4px solid #1a237e;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #1a237e;
+        }
+        
+        /* Table Styles */
+        .table-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .admin-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #555;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .admin-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-approve {
+            background: #2ed573;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .btn-reject {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        /* Message Display */
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Manual Entry */
+        .manual-entry {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .form-row input, .form-row select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+        }
+        
+        .add-btn {
+            background: #ff9f43;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .dashboard-content {
+                padding: 15px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-box">
+            <h1><i class="fas fa-lock"></i> Admin Login</h1>
+            <p>Welcome Business Administration</p>
+            
+            <input type="password" id="adminPassword" placeholder="Enter admin password" autocomplete="off">
+            
+            <button id="loginButton" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            
+            <div id="loginMessage" class="login-message"></div>
+            
+            <p style="margin-top: 20px; color: #888; font-size: 0.9rem;">
+                Password: <strong>Labbaik785@#$</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-dashboard">
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-user-shield"></i>
+                <span>Welcome Business - Admin</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="deposit.html"><i class="fas fa-money-bill-transfer"></i> Deposit</a></li>
+                <li><a href="balance.html"><i class="fas fa-wallet"></i> Balance</a></li>
+                <li><a href="admin.html" class="active"><i class="fas fa-user-shield"></i> Admin</a></li>
+            </ul>
+        </nav>
+
+        <div class="dashboard-content">
+            <!-- Header -->
+            <div class="dashboard-header">
+                <div>
+                    <h1><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+                    <p>Welcome, Administrator | <span id="currentTime"></span></p>
+                </div>
+                <button onclick="logoutAdmin()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+
+            <!-- Message Display -->
+            <div id="adminMessage" class="message"></div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Pending Deposits</h3>
+                    <div class="stat-number" id="pendingCount">0</div>
+                    <p>Awaiting approval</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Deposits</h3>
+                    <div class="stat-number" id="totalAmount">$0</div>
+                    <p>All time deposits</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Users</h3>
+                    <div class="stat-number" id="activeUsers">0</div>
+                    <p>Registered users</p>
+                </div>
+            </div>
+
+            <!-- Pending Deposits Table -->
+            <div class="table-container">
+                <h2><i class="fas fa-clock"></i> Pending Deposits</h2>
+                <p>Approve or reject after verifying WhatsApp screenshot</p>
+                
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Amount</th>
+                            <th>TXID</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pendingTable">
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 40px; color: #666;">
+                                Loading pending deposits...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Approved Deposits Table -->
+            <div class="table-container">
+                <h2><i class="fas fa-check-circle"></i> Approved Deposits</h2>
+                
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Amount</th>
+                            <th>TXID</th>
+                            <th>Approved Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="approvedTable">
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 30px; color: #666;">
+                                No approved deposits
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Manual Entry -->
+            <div class="manual-entry">
+                <h2><i class="fas fa-edit"></i> Manual Entry</h2>
+                <p>Add deposit or profit manually</p>
+                
+                <div class="form-row">
+                    <input type="text" id="manualPhone" placeholder="Phone (+1234567890)">
+                    <input type="text" id="manualName" placeholder="Full Name">
+                    <input type="number" id="manualAmount" placeholder="Amount">
+                    <select id="manualType">
+                        <option value="deposit">Deposit</option>
+                        <option value="profit">Profit</option>
+                    </select>
+                </div>
+                
+                <button onclick="addManualEntry()" class="add-btn">
+                    <i class="fas fa-plus-circle"></i> Add Entry
+                </button>
+            </div>
+
+            <!-- Data Management -->
+            <div style="text-align: center; margin-top: 30px;">
+                <button onclick="addTestData()" style="background: #3742fa; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; margin-right: 10px;">
+                    <i class="fas fa-vial"></i> Add Test Data
+                </button>
+                <button onclick="exportData()" style="background: #2ed573; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; margin-right: 10px;">
+                    <i class="fas fa-download"></i> Export Data
+                </button>
+                <button onclick="clearData()" style="background: #ff4757; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer;">
+                    <i class="fas fa-trash"></i> Clear Data
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ====================
+        // CONFIGURATION
+        // ====================
+        const ADMIN_PASSWORD = "Labbaik785@#$";
+        let isLoggedIn = false;
+
+        // ====================
+        // INITIALIZATION
+        // ====================
+        window.onload = function() {
+            console.log("Admin page loaded");
+            
+            // Setup event listeners
+            document.getElementById('loginButton').onclick = loginAdmin;
+            
+            // Enter key support
+            document.getElementById('adminPassword').onkeypress = function(e) {
+                if (e.key === 'Enter') {
+                    loginAdmin();
+                }
+            };
+            
+            // Check if already logged in
+            if (localStorage.getItem('adminLoggedIn') === 'true') {
+                console.log("Already logged in");
+                showDashboard();
+            }
+            
+            // Focus on password field
+            document.getElementById('adminPassword').focus();
+        };
+
+        // ====================
+        // LOGIN FUNCTIONS
+        // ====================
+        function loginAdmin() {
+            console.log("Login function called");
+            
+            const password = document.getElementById('adminPassword').value;
+            const messageDiv = document.getElementById('loginMessage');
+            
+            // Clear message
+            messageDiv.textContent = '';
+            
+            // Validation
+            if (!password) {
+                messageDiv.textContent = 'Please enter password';
+                return;
+            }
+            
+            console.log("Password entered:", password);
+            
+            // Check password
+            if (password === ADMIN_PASSWORD) {
+                console.log("Password correct - logging in");
+                showDashboard();
+            } else {
+                console.log("Wrong password");
+                messageDiv.textContent = '❌ Incorrect password!';
+                document.getElementById('adminPassword').value = '';
+                document.getElementById('adminPassword').focus();
+            }
+        }
+        
+        function showDashboard() {
+            console.log("Showing dashboard");
+            
+            // Hide login, show dashboard
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+            
+            // Save login state
+            localStorage.setItem('adminLoggedIn', 'true');
+            
+            // Load data
+            loadAdminData();
+            
+            // Start clock
+            startClock();
+        }
+        
+        function logoutAdmin() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('adminLoggedIn');
+                location.reload();
+            }
+        }
+
+        // ====================
+        // CLOCK
+        // ====================
+        function startClock() {
+            function updateTime() {
+                const now = new Date();
+                document.getElementById('currentTime').textContent = now.toLocaleString();
+            }
+            updateTime();
+            setInterval(updateTime, 1000);
+        }
+
+        // ====================
+        // DATA LOADING
+        // ====================
+        function loadAdminData() {
+            console.log("Loading admin data");
+            updateStats();
+            loadPendingTable();
+            loadApprovedTable();
+        }
+        
+        function updateStats() {
+            try {
+                console.log("Updating stats");
+                
+                // Get deposits
+                const depositsData = localStorage.getItem('deposits');
+                console.log("Deposits data:", depositsData);
+                
+                const deposits = depositsData ? JSON.parse(depositsData) : [];
+                console.log("Parsed deposits:", deposits);
+                
+                // Get balances
+                const balancesData = localStorage.getItem('balances');
+                const balances = balancesData ? JSON.parse(balancesData) : [];
+                
+                // Calculate stats
+                const pending = deposits.filter(d => d.status === 'pending');
+                const totalAmount = deposits.reduce((sum, d) => sum + (d.amount || 0), 0);
+                
+                console.log("Pending count:", pending.length);
+                console.log("Total amount:", totalAmount);
+                console.log("Active users:", balances.length);
+                
+                // Update display
+                document.getElementById('pendingCount').textContent = pending.length;
+                document.getElementById('totalAmount').textContent = '$' + totalAmount.toFixed(2);
+                document.getElementById('activeUsers').textContent = balances.length;
+                
+            } catch (error) {
+                console.error("Error updating stats:", error);
+                showMessage("Error loading statistics", "error");
+            }
+        }
+        
+    
