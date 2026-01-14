@@ -6,6 +6,238 @@
     <title>My Balance - Welcome Business</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Balance Page Specific Styles */
+        .balance-main { padding: 30px 20px; min-height: 80vh; }
+        .balance-container { max-width: 1200px; margin: 0 auto; }
+        
+        .user-id-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .user-input {
+            display: flex;
+            gap: 15px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        
+        .user-input input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .load-btn {
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .balance-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .balance-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 5px solid;
+        }
+        
+        .balance-card.total { border-top-color: #1a237e; }
+        .balance-card.deposited { border-top-color: #4caf50; }
+        .balance-card.profit { border-top-color: #ff9f43; }
+        .balance-card.pending { border-top-color: #ff4757; }
+        
+        .balance-amount {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #1a237e;
+        }
+        
+        .transaction-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filters select, .filters input {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .transaction-table {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        
+        .transaction-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .transaction-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #555;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .transaction-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-approved { background: #d4edda; color: #155724; }
+        .status-rejected { background: #f8d7da; color: #721c24; }
+        
+        .no-data {
+            text-align: center;
+            padding: 60px !important;
+            color: #666;
+        }
+        
+        .table-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .refresh-btn {
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .support-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .support-card {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .support-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .support-btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .support-btn.whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        
+        .support-btn.update {
+            background: white;
+            color: #667eea;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 768px) {
+            .user-input { flex-direction: column; }
+            .balance-overview { grid-template-columns: 1fr; }
+            .section-header { flex-direction: column; align-items: stretch; }
+            .filters { flex-direction: column; }
+            .table-info { flex-direction: column; text-align: center; }
+            .support-card { flex-direction: column; text-align: center; }
+            .support-actions { flex-direction: column; }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -26,13 +258,15 @@
             <!-- User Identification -->
             <div class="user-id-section">
                 <h1><i class="fas fa-wallet"></i> Investment Account</h1>
+                <p>Enter your WhatsApp number to check your balance</p>
+                
                 <div class="user-input">
                     <input type="text" id="userPhone" placeholder="Enter your WhatsApp number (e.g., +11234567890)">
                     <button onclick="loadBalance()" class="load-btn">
-                        <i class="fas fa-search"></i> Load Balance
+                        <i class="fas fa-search"></i> Check Balance
                     </button>
                 </div>
-                <p class="hint">Enter the same WhatsApp number used for deposit</p>
+                <p class="hint">Use the same number you used for deposit</p>
             </div>
 
             <!-- Balance Overview -->
@@ -82,6 +316,9 @@
                 </div>
             </div>
 
+            <!-- Message Display -->
+            <div id="balanceMessage" class="message"></div>
+
             <!-- Transaction History -->
             <div class="transaction-section">
                 <div class="section-header">
@@ -90,8 +327,8 @@
                         <select id="filterType" onchange="filterTransactions()">
                             <option value="all">All Transactions</option>
                             <option value="deposit">Deposits Only</option>
-                            <option value="profit">Profits Only</option>
                             <option value="pending">Pending Only</option>
+                            <option value="approved">Approved Only</option>
                         </select>
                         <input type="text" id="searchTx" placeholder="Search by TXID..." onkeyup="searchTransactions()">
                     </div>
@@ -112,7 +349,7 @@
                         <tbody id="transactionBody">
                             <tr>
                                 <td colspan="6" class="no-data">
-                                    <i class="fas fa-search"></i>
+                                    <i class="fas fa-search" style="font-size: 3rem; color: #ddd; margin-bottom: 15px;"></i>
                                     <p>Enter your phone number to load transactions</p>
                                 </td>
                             </tr>
@@ -132,7 +369,7 @@
             <div class="support-section">
                 <div class="support-card">
                     <div class="support-icon">
-                        <i class="fas fa-headset"></i>
+                        <i class="fas fa-headset" style="font-size: 3rem;"></i>
                     </div>
                     <div class="support-content">
                         <h3>Need Help with Your Balance?</h3>
@@ -151,82 +388,158 @@
         </div>
     </main>
 
-    <script src="script.js"></script>
     <script>
+        // ====================
+        // GLOBAL VARIABLES
+        // ====================
         let currentUserPhone = '';
-
+        let allTransactions = [];
+        
+        // ====================
+        // INITIALIZATION
+        // ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Balance page loaded");
+            
+            // Check URL parameters for phone
+            const urlParams = new URLSearchParams(window.location.search);
+            const phoneFromUrl = urlParams.get('phone');
+            
+            if (phoneFromUrl) {
+                document.getElementById('userPhone').value = phoneFromUrl;
+                setTimeout(() => loadBalance(), 500);
+            }
+            
+            // Enter key support
+            document.getElementById('userPhone').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    loadBalance();
+                }
+            });
+        });
+        
+        // ====================
+        // LOAD BALANCE FUNCTION
+        // ====================
         function loadBalance() {
-            const phone = document.getElementById('userPhone').value.trim();
+            const phoneInput = document.getElementById('userPhone');
+            const phone = phoneInput.value.trim();
+            
+            // Clear previous message
+            showMessage('', '');
+            
             if (!phone) {
-                showBalanceMessage('Please enter your WhatsApp number', 'error');
+                showMessage('Please enter your WhatsApp number', 'error');
+                phoneInput.focus();
                 return;
             }
-
+            
+            if (phone.length < 10) {
+                showMessage('Please enter a valid phone number', 'error');
+                return;
+            }
+            
             currentUserPhone = phone;
             
-            // Load from localStorage
-            const deposits = JSON.parse(localStorage.getItem('deposits')) || [];
-            const balances = JSON.parse(localStorage.getItem('balances')) || [];
-            
-            // Filter user's deposits
-            const userDeposits = deposits.filter(d => d.phone === phone);
-            
-            if (userDeposits.length === 0) {
-                showBalanceMessage('No deposits found for this number', 'info');
-                resetBalanceDisplay();
-                return;
+            try {
+                console.log("Loading balance for:", phone);
+                
+                // Get deposits from localStorage
+                const deposits = JSON.parse(localStorage.getItem('deposits')) || [];
+                console.log("Total deposits found:", deposits.length);
+                
+                // Get user's deposits
+                const userDeposits = deposits.filter(d => d.phone === phone);
+                console.log("User deposits found:", userDeposits.length);
+                
+                // Get balances from localStorage
+                const balances = JSON.parse(localStorage.getItem('balances')) || [];
+                const userBalance = balances.find(b => b.phone === phone);
+                
+                if (userDeposits.length === 0 && !userBalance) {
+                    showMessage('No deposits found for this number. Make a deposit first.', 'info');
+                    resetBalanceDisplay();
+                    return;
+                }
+                
+                // Calculate totals
+                const approvedDeposits = userDeposits.filter(d => d.status === 'approved');
+                const pendingDeposits = userDeposits.filter(d => d.status === 'pending');
+                
+                const totalDeposited = approvedDeposits.reduce((sum, d) => sum + (d.amount || 0), 0);
+                const pendingAmount = pendingDeposits.reduce((sum, d) => sum + (d.amount || 0), 0);
+                
+                // Get user balance info
+                let totalBalance = totalDeposited;
+                let totalProfit = 0;
+                let lastUpdated = new Date().toISOString();
+                
+                if (userBalance) {
+                    totalBalance = userBalance.totalBalance || totalDeposited;
+                    totalProfit = userBalance.totalProfit || 0;
+                    lastUpdated = userBalance.lastUpdated || new Date().toISOString();
+                }
+                
+                // Update display
+                document.getElementById('totalBalance').textContent = `$${totalBalance.toFixed(2)}`;
+                document.getElementById('totalDeposited').textContent = `$${totalDeposited.toFixed(2)}`;
+                document.getElementById('totalProfit').textContent = `$${totalProfit.toFixed(2)}`;
+                document.getElementById('pendingDeposits').textContent = `$${pendingAmount.toFixed(2)}`;
+                document.getElementById('lastUpdated').textContent = new Date(lastUpdated).toLocaleString();
+                
+                // Store all transactions for filtering
+                allTransactions = userDeposits;
+                
+                // Load transactions
+                loadTransactions(userDeposits);
+                
+                // Update URL with phone number
+                const newUrl = window.location.pathname + '?phone=' + encodeURIComponent(phone);
+                window.history.pushState({}, '', newUrl);
+                
+                showMessage('Balance loaded successfully!', 'success');
+                
+            } catch (error) {
+                console.error("Error loading balance:", error);
+                showMessage('Error loading balance data. Please try again.', 'error');
             }
-
-            // Calculate totals
-            const totalDeposited = userDeposits
-                .filter(d => d.status === 'approved')
-                .reduce((sum, d) => sum + d.amount, 0);
-            
-            const pendingAmount = userDeposits
-                .filter(d => d.status === 'pending')
-                .reduce((sum, d) => sum + d.amount, 0);
-            
-            // Find user balance
-            const userBalance = balances.find(b => b.phone === phone);
-            const totalProfit = userBalance ? userBalance.totalProfit || 0 : 0;
-            const totalBalance = totalDeposited + totalProfit;
-
-            // Update display
-            document.getElementById('totalBalance').textContent = `$${totalBalance.toFixed(2)}`;
-            document.getElementById('totalDeposited').textContent = `$${totalDeposited.toFixed(2)}`;
-            document.getElementById('totalProfit').textContent = `$${totalProfit.toFixed(2)}`;
-            document.getElementById('pendingDeposits').textContent = `$${pendingAmount.toFixed(2)}`;
-            
-            // Update last updated
-            const lastUpdate = userBalance ? new Date(userBalance.lastUpdated) : new Date();
-            document.getElementById('lastUpdated').textContent = lastUpdate.toLocaleString();
-
-            // Load transactions
-            loadTransactions(userDeposits);
-            
-            showBalanceMessage('Balance loaded successfully!', 'success');
         }
-
+        
+        // ====================
+        // LOAD TRANSACTIONS
+        // ====================
         function loadTransactions(deposits) {
             const tbody = document.getElementById('transactionBody');
-            tbody.innerHTML = '';
-
-            if (deposits.length === 0) {
+            
+            if (!deposits || deposits.length === 0) {
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="6" class="no-data">
-                            <i class="fas fa-inbox"></i>
+                            <i class="fas fa-inbox" style="font-size: 3rem; color: #ddd; margin-bottom: 15px;"></i>
                             <p>No transactions found</p>
                         </td>
                     </tr>
                 `;
                 return;
             }
-
+            
             // Sort by date (newest first)
             deposits.sort((a, b) => new Date(b.date) - new Date(a.date));
-
+            
+            let html = '';
+            
             deposits.forEach(deposit => {
+                let statusClass = '';
+                let statusText = '';
+                
+                if (deposit.status === 'pending') {
+                    statusClass = 'status-pending';
+                    statusText = 'Pending';
+                } else if (deposit.status === 'approved') {
+                    statusClass = 'status-approved';
+                    statusText = 'Approved';
+                } else {
+             deposits.forEach(deposit => {
                 let statusClass = '';
                 let statusText = '';
                 
