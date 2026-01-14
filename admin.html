@@ -1,147 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin - Welcome Business</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Welcome Business</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: Arial; background: #f0f2f5; margin: 0; padding: 20px; }
-        .login-box { max-width: 400px; margin: 100px auto; padding: 30px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center; }
-        input { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: #1a237e; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
-        button:hover { background: #283593; }
-        .message { margin-top: 15px; color: red; }
-        .dashboard { display: none; }
-        .navbar { background: #1a237e; color: white; padding: 15px; margin-bottom: 20px; }
-    </style>
-</head>
-<body>
-    <!-- Login Screen -->
-    <div id="loginScreen" class="login-box">
-        <h2>Admin Login</h2>
-        <input type="password" id="password" placeholder="Enter password">
-        <button onclick="login()">Login</button>
-        <div id="msg" class="message"></div>
-        <p style="margin-top: 20px; color: #666;">Password: Labbaik785@#$</p>
-    </div>
-
-    <!-- Dashboard -->
-    <div id="dashboard" class="dashboard">
-        <div class="navbar">
-            <h2>Welcome Business - Admin</h2>
-            <button onclick="logout()" style="width: auto; padding: 8px 15px;">Logout</button>
-        </div>
-        
-        <div style="padding: 20px;">
-            <h3>Pending Deposits</h3>
-            <div id="pending">Loading...</div>
-            
-            <h3 style="margin-top: 30px;">Add Test Data</h3>
-            <button onclick="addTest()">Add Test Deposit</button>
-        </div>
-    </div>
-
-    <script>
-        // Simple Login
-        function login() {
-            const pass = document.getElementById('password').value;
-            const msg = document.getElementById('msg');
-            
-            if (!pass) {
-                msg.textContent = 'Enter password';
-                return;
-            }
-            
-            if (pass === "Labbaik785@#$") {
-                // Success
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                localStorage.setItem('loggedIn', 'true');
-                loadData();
-            } else {
-                msg.textContent = 'Wrong password!';
-                document.getElementById('password').value = '';
-            }
-        }
-        
-        // Load Data
-        function loadData() {
-            let deposits = JSON.parse(localStorage.getItem('deposits')) || [];
-            let pending = deposits.filter(d => d.status === 'pending');
-            
-            document.getElementById('pending').innerHTML = 
-                pending.length > 0 ? 
-                `${pending.length} pending deposits` : 
-                'No pending deposits';
-        }
-        
-        // Add Test
-        function addTest() {
-            let deposits = JSON.parse(localStorage.getItem('deposits')) || [];
-            deposits.push({
-                id: 'TEST-' + Date.now(),
-                name: 'Test User',
-                phone: '+1234567890',
-                amount: 100,
-                txid: 'TEST-' + Date.now(),
-                date: new Date().toISOString(),
-                status: 'pending'
-            });
-            
-            localStorage.setItem('deposits', JSON.stringify(deposits));
-            alert('Test deposit added!');
-            loadData();
-        }
-        
-        // Logout
-        function logout() {
-            localStorage.removeItem('loggedIn');
-            location.reload();
-        }
-        
-        // Auto login check
-        window.onload = function() {
-            if (localStorage.getItem('loggedIn') === 'true') {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                loadData();
-            }
-            
-            // Enter key support
-            document.getElementById('password').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') login();
-            });
-        };
-    </script>
-</body>
-</html>            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            text-align: center;
-            width: 90%;
+        /* Admin Styles */
+        .login-container {
             max-width: 400px;
+            margin: 100px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
         }
         
-        .login-box h1 {
+        .login-container h2 {
             color: #1a237e;
-            margin-bottom: 10px;
-            font-size: 1.8rem;
-        }
-        
-        .login-box p {
-            color: #666;
             margin-bottom: 25px;
         }
         
-        .login-box input {
+        .login-container input {
             width: 100%;
             padding: 15px;
             margin: 15px 0;
             border: 2px solid #ddd;
             border-radius: 8px;
-            font-size: 1rem;
-            transition: border 0.3s;
-        }
-        
-        .login-box input:focus {
-            border-color: #1a237e;
-            outline: none;
+            font-size: 1.1rem;
         }
         
         .login-btn {
@@ -152,14 +40,8 @@
             padding: 15px;
             border-radius: 8px;
             font-size: 1.1rem;
-            font-weight: 600;
             cursor: pointer;
             margin-top: 10px;
-            transition: background 0.3s;
-        }
-        
-        .login-btn:hover {
-            background: #283593;
         }
         
         .login-message {
@@ -169,64 +51,19 @@
             font-size: 0.9rem;
         }
         
-        /* Admin Dashboard */
-        .admin-dashboard {
-            display: none;
-        }
+        /* Dashboard */
+        .admin-dashboard { display: none; }
+        .admin-container { max-width: 1400px; margin: 0 auto; padding: 20px; }
         
-        /* Navigation */
-        .navbar {
+        .admin-header {
             background: linear-gradient(135deg, #1a237e, #283593);
             color: white;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.3rem;
-            font-weight: bold;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 15px;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .nav-links a.active {
-            background: rgba(255,255,255,0.2);
-        }
-        
-        /* Dashboard Content */
-        .dashboard-content {
-            padding: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 20px 30px;
+            border-radius: 10px;
             margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .logout-btn {
@@ -236,10 +73,8 @@
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            font-weight: 500;
         }
         
-        /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -253,7 +88,6 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             text-align: center;
-            border-top: 4px solid #1a237e;
         }
         
         .stat-number {
@@ -263,20 +97,41 @@
             color: #1a237e;
         }
         
-        /* Table Styles */
-        .table-container {
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .tab {
+            padding: 15px 30px;
+            background: #e9ecef;
+            border: none;
+            cursor: pointer;
+            border-right: 1px solid #dee2e6;
+        }
+        
+        .tab.active {
             background: white;
-            padding: 25px;
-            border-radius: 10px;
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 10px 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-            overflow-x: auto;
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
         }
         
         .admin-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            margin-top: 20px;
         }
         
         .admin-table th {
@@ -284,8 +139,6 @@
             padding: 15px;
             text-align: left;
             font-weight: 600;
-            color: #555;
-            border-bottom: 2px solid #dee2e6;
         }
         
         .admin-table td {
@@ -305,7 +158,6 @@
             padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 0.9rem;
         }
         
         .btn-reject {
@@ -315,104 +167,38 @@
             padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 0.9rem;
         }
         
-        /* Message Display */
-        .message {
+        .alert {
             padding: 15px;
             border-radius: 8px;
             margin: 15px 0;
             display: none;
         }
         
-        .message.success {
+        .alert-success {
             background: #d4edda;
             color: #155724;
-            border: 1px solid #c3e6cb;
         }
         
-        .message.error {
+        .alert-error {
             background: #f8d7da;
             color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        /* Manual Entry */
-        .manual-entry {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .form-row input, .form-row select {
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            width: 100%;
-        }
-        
-        .add-btn {
-            background: #ff9f43;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px;
-            }
-            
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .dashboard-content {
-                padding: 15px;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
 <body>
     <!-- Login Screen -->
-    <div id="loginScreen" class="login-screen">
-        <div class="login-box">
-            <h1><i class="fas fa-lock"></i> Admin Login</h1>
-            <p>Welcome Business Administration</p>
-            
-            <input type="password" id="adminPassword" placeholder="Enter admin password" autocomplete="off">
-            
-            <button id="loginButton" class="login-btn">
-                <i class="fas fa-sign-in-alt"></i> Login
-            </button>
-            
-            <div id="loginMessage" class="login-message"></div>
-            
-            <p style="margin-top: 20px; color: #888; font-size: 0.9rem;">
-                Password: <strong>Labbaik785@#$</strong>
-            </p>
-        </div>
+    <div id="loginScreen" class="login-container">
+        <h2><i class="fas fa-lock"></i> Admin Login</h2>
+        <input type="password" id="adminPassword" placeholder="Enter admin password">
+        <button id="loginButton" class="login-btn">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+        <div id="loginMessage" class="login-message"></div>
+        <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">
+            Password: Labbaik785@#$
+        </p>
     </div>
 
     <!-- Admin Dashboard -->
@@ -430,9 +216,9 @@
             </ul>
         </nav>
 
-        <div class="dashboard-content">
+        <div class="admin-container">
             <!-- Header -->
-            <div class="dashboard-header">
+            <div class="admin-header">
                 <div>
                     <h1><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
                     <p>Welcome, Administrator | <span id="currentTime"></span></p>
@@ -442,8 +228,8 @@
                 </button>
             </div>
 
-            <!-- Message Display -->
-            <div id="adminMessage" class="message"></div>
+            <!-- Alert Message -->
+            <div id="adminAlert" class="alert"></div>
 
             <!-- Stats -->
             <div class="stats-grid">
@@ -464,87 +250,138 @@
                 </div>
             </div>
 
-            <!-- Pending Deposits Table -->
-            <div class="table-container">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('pending')">
+                    <i class="fas fa-clock"></i> Pending
+                </button>
+                <button class="tab" onclick="switchTab('approved')">
+                    <i class="fas fa-check-circle"></i> Approved
+                </button>
+                <button class="tab" onclick="switchTab('users')">
+                    <i class="fas fa-users"></i> Users
+                </button>
+            </div>
+
+            <!-- Tab Contents -->
+            <div id="pendingTab" class="tab-content active">
                 <h2><i class="fas fa-clock"></i> Pending Deposits</h2>
                 <p>Approve or reject after verifying WhatsApp screenshot</p>
                 
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Amount</th>
-                            <th>TXID</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="pendingTable">
-                        <tr>
-                            <td colspan="6" style="text-align: center; padding: 40px; color: #666;">
-                                Loading pending deposits...
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div style="margin: 20px 0;">
+                    <input type="text" id="searchPending" placeholder="Search deposits..." 
+                           style="padding: 12px; width: 300px; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Amount</th>
+                                <th>TXID</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pendingTable">
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 40px; color: #666;">
+                                    Loading pending deposits...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <!-- Approved Deposits Table -->
-            <div class="table-container">
+            <div id="approvedTab" class="tab-content">
                 <h2><i class="fas fa-check-circle"></i> Approved Deposits</h2>
                 
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Amount</th>
-                            <th>TXID</th>
-                            <th>Approved Date</th>
-                        </tr>
-                    </thead>
-                    <tbody id="approvedTable">
-                        <tr>
-                            <td colspan="6" style="text-align: center; padding: 30px; color: #666;">
-                                No approved deposits
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div style="overflow-x: auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Amount</th>
+                                <th>TXID</th>
+                                <th>Approved Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="approvedTable">
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 30px; color: #666;">
+                                    No approved deposits
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="usersTab" class="tab-content">
+                <h2><i class="fas fa-users"></i> Users</h2>
+                
+                <div style="overflow-x: auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Total Deposited</th>
+                                <th>Current Balance</th>
+                                <th>Last Activity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable">
+                            <tr>
+                                <td colspan="5" style="text-align: center; padding: 30px; color: #666;">
+                                    No users found
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- Manual Entry -->
-            <div class="manual-entry">
+            <div style="background: white; padding: 30px; border-radius: 10px; margin-top: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
                 <h2><i class="fas fa-edit"></i> Manual Entry</h2>
                 <p>Add deposit or profit manually</p>
                 
-                <div class="form-row">
-                    <input type="text" id="manualPhone" placeholder="Phone (+1234567890)">
-                    <input type="text" id="manualName" placeholder="Full Name">
-                    <input type="number" id="manualAmount" placeholder="Amount">
-                    <select id="manualType">
-                        <option value="deposit">Deposit</option>
-                        <option value="profit">Profit</option>
-                    </select>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                    <div>
+                        <input type="text" id="manualPhone" placeholder="Phone (+1234567890)" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                    <div>
+                        <input type="text" id="manualName" placeholder="Full Name" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                    <div>
+                        <input type="number" id="manualAmount" placeholder="Amount" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                    <div>
+                        <select id="manualType" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+                            <option value="deposit">Deposit</option>
+                            <option value="profit">Profit</option>
+                        </select>
+                    </div>
                 </div>
                 
-                <button onclick="addManualEntry()" class="add-btn">
+                <button onclick="addManualEntry()" style="background: #ff9f43; color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer;">
                     <i class="fas fa-plus-circle"></i> Add Entry
                 </button>
             </div>
 
             <!-- Data Management -->
-            <div style="text-align: center; margin-top: 30px;">
-                <button onclick="addTestData()" style="background: #3742fa; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; margin-right: 10px;">
-                    <i class="fas fa-vial"></i> Add Test Data
-                </button>
+            <div style="margin-top: 30px; text-align: center;">
                 <button onclick="exportData()" style="background: #2ed573; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; margin-right: 10px;">
                     <i class="fas fa-download"></i> Export Data
                 </button>
-                <button onclick="clearData()" style="background: #ff4757; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer;">
-                    <i class="fas fa-trash"></i> Clear Data
+                <button onclick="addTestData()" style="background: #3742fa; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer;">
+                    <i class="fas fa-vial"></i> Add Test Data
                 </button>
             </div>
         </div>
@@ -555,144 +392,147 @@
         // CONFIGURATION
         // ====================
         const ADMIN_PASSWORD = "Labbaik785@#$";
-        let isLoggedIn = false;
-
+        
         // ====================
         // INITIALIZATION
         // ====================
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             console.log("Admin page loaded");
             
-            // Setup event listeners
-            document.getElementById('loginButton').onclick = loginAdmin;
+            // Setup login button
+            document.getElementById('loginButton').addEventListener('click', loginAdmin);
             
             // Enter key support
-            document.getElementById('adminPassword').onkeypress = function(e) {
-                if (e.key === 'Enter') {
-                    loginAdmin();
-                }
-            };
+            document.getElementById('adminPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') loginAdmin();
+            });
             
             // Check if already logged in
             if (localStorage.getItem('adminLoggedIn') === 'true') {
-                console.log("Already logged in");
-                showDashboard();
+                loginSuccess();
             }
             
             // Focus on password field
             document.getElementById('adminPassword').focus();
-        };
-
+        });
+        
         // ====================
         // LOGIN FUNCTIONS
         // ====================
         function loginAdmin() {
-            console.log("Login function called");
-            
             const password = document.getElementById('adminPassword').value;
             const messageDiv = document.getElementById('loginMessage');
             
-            // Clear message
             messageDiv.textContent = '';
             
-            // Validation
             if (!password) {
                 messageDiv.textContent = 'Please enter password';
                 return;
             }
             
-            console.log("Password entered:", password);
-            
-            // Check password
             if (password === ADMIN_PASSWORD) {
-                console.log("Password correct - logging in");
-                showDashboard();
+                loginSuccess();
             } else {
-                console.log("Wrong password");
                 messageDiv.textContent = '❌ Incorrect password!';
                 document.getElementById('adminPassword').value = '';
                 document.getElementById('adminPassword').focus();
             }
         }
         
-        function showDashboard() {
-            console.log("Showing dashboard");
-            
-            // Hide login, show dashboard
+        function loginSuccess() {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('adminDashboard').style.display = 'block';
-            
-            // Save login state
             localStorage.setItem('adminLoggedIn', 'true');
-            
-            // Load data
             loadAdminData();
-            
-            // Start clock
             startClock();
         }
         
         function logoutAdmin() {
-            if (confirm('Are you sure you want to logout?')) {
+            if (confirm('Logout?')) {
                 localStorage.removeItem('adminLoggedIn');
                 location.reload();
             }
         }
-
+        
         // ====================
         // CLOCK
         // ====================
         function startClock() {
-            function updateTime() {
+            function updateClock() {
                 const now = new Date();
                 document.getElementById('currentTime').textContent = now.toLocaleString();
             }
-            updateTime();
-            setInterval(updateTime, 1000);
+            updateClock();
+            setInterval(updateClock, 1000);
         }
-
+        
         // ====================
         // DATA LOADING
         // ====================
         function loadAdminData() {
-            console.log("Loading admin data");
             updateStats();
             loadPendingTable();
             loadApprovedTable();
+            loadUsersTable();
         }
         
         function updateStats() {
             try {
-                console.log("Updating stats");
+                const deposits = JSON.parse(localStorage.getItem('deposits')) || [];
+                const balances = JSON.parse(localStorage.getItem('balances')) || [];
                 
-                // Get deposits
-                const depositsData = localStorage.getItem('deposits');
-                console.log("Deposits data:", depositsData);
-                
-                const deposits = depositsData ? JSON.parse(depositsData) : [];
-                console.log("Parsed deposits:", deposits);
-                
-                // Get balances
-                const balancesData = localStorage.getItem('balances');
-                const balances = balancesData ? JSON.parse(balancesData) : [];
-                
-                // Calculate stats
+                // Pending count
                 const pending = deposits.filter(d => d.status === 'pending');
-                const totalAmount = deposits.reduce((sum, d) => sum + (d.amount || 0), 0);
-                
-                console.log("Pending count:", pending.length);
-                console.log("Total amount:", totalAmount);
-                console.log("Active users:", balances.length);
-                
-                // Update display
                 document.getElementById('pendingCount').textContent = pending.length;
-                document.getElementById('totalAmount').textContent = '$' + totalAmount.toFixed(2);
+                
+                // Total amount
+                const total = deposits.reduce((sum, d) => sum + (d.amount || 0), 0);
+                document.getElementById('totalAmount').textContent = '$' + total.toFixed(2);
+                
+                // Active users
                 document.getElementById('activeUsers').textContent = balances.length;
                 
             } catch (error) {
                 console.error("Error updating stats:", error);
-                showMessage("Error loading statistics", "error");
             }
         }
         
-    
+        function loadPendingTable() {
+            try {
+                const deposits = JSON.parse(localStorage.getItem('deposits')) || [];
+                const pending = deposits.filter(d => d.status === 'pending');
+                const table = document.getElementById('pendingTable');
+                
+                table.innerHTML = '';
+                
+                if (pending.length === 0) {
+                    table.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 40px; color: #666;">
+                                No pending deposits
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                pending.forEach(deposit => {
+                    table.innerHTML += `
+                        <tr>
+                            <td>${new Date(deposit.date).toLocaleDateString()}</td>
+                            <td><strong>${deposit.name || 'N/A'}</strong></td>
+                            <td>${deposit.phone || 'N/A'}</td>
+                            <td><strong style="color: #1a237e;">$${(deposit.amount || 0).toFixed(2)}</strong></td>
+                            <td><code style="font-size: 0.8rem;">${(deposit.txid || 'N/A').substring(0, 15)}...</code></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button onclick="approveDeposit('${deposit.id || deposit.txid}')" class="btn-approve">
+                                        <i class="fas fa-check"></i> Approve
+                                    </button>
+                                    <button onclick="rejectDeposit('${deposit.id || deposit.txid}')" class="btn-reject">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                
