@@ -7,36 +7,179 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Additional deposit page styles */
-        .deposit-main { padding: 30px 20px; min-height: 80vh; }
-        .deposit-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .deposit-left, .deposit-right { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         
-        .address-display { background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; display: flex; justify-content: space-between; align-items: center; }
-        .address-display code { font-family: monospace; color: #1a237e; word-break: break-all; font-size: 0.9rem; }
-        .copy-btn { background: #1a237e; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+        body {
+            background: #f5f7fa;
+            color: #333;
+        }
         
-        .qr-placeholder { text-align: center; padding: 20px; }
-        .qr-image { width: 200px; height: 200px; background: #f8f9fa; border: 2px dashed #ddd; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; }
-        .qr-image i { font-size: 3rem; color: #666; }
+        .navbar {
+            background: linear-gradient(135deg, #1a237e, #283593);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
         
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #555; }
-        .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
         
-        .whatsapp-contact { background: #25D366; color: white; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: center; }
-        .whatsapp-contact a { color: white; text-decoration: none; font-weight: bold; }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
         
-        .submit-btn { width: 100%; background: #4caf50; color: white; border: none; padding: 15px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        
+        .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .deposit-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .deposit-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .address-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border: 2px dashed #ddd;
+        }
+        
+        .address-box code {
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #1a237e;
+            word-break: break-all;
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        .copy-btn {
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .whatsapp-card {
+            background: #25D366;
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .message-box {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .message-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
         
         @media (max-width: 768px) {
-            .deposit-container { grid-template-columns: 1fr; }
-            .form-row { grid-template-columns: 1fr; }
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .deposit-card {
+                padding: 25px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-chart-line"></i>
@@ -46,131 +189,114 @@
             <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
             <li><a href="deposit.html" class="active"><i class="fas fa-money-bill-transfer"></i> Deposit</a></li>
             <li><a href="balance.html"><i class="fas fa-wallet"></i> My Balance</a></li>
-            <li><a href="admin.html"><i class="fas fa-user-shield"></i> Admin</a></li>
         </ul>
     </nav>
 
-    <main class="deposit-main">
-        <div class="deposit-container">
-            <!-- Left: Address & Instructions -->
-            <div class="deposit-left">
-                <h1><i class="fas fa-qrcode"></i> Deposit USDT (TRC20)</h1>
-                <p>Send USDT to the address below</p>
-                
-                <div style="margin: 25px 0;">
-                    <h3><i class="fas fa-wallet"></i> TRC20 Address</h3>
-                    <div class="address-display">
-                        <code id="trc20Address">TDVgjumBKBZAG3AdKwnV7q9QJfQUzCEBNJ</code>
-                        <button onclick="copyAddress()" class="copy-btn">
-                            <i class="fas fa-copy"></i> Copy
-                        </button>
-                    </div>
-                    <p style="color: #666; font-size: 0.9rem; margin-top: 5px;">Network: TRC20 (Tron) | Minimum: $50 USDT</p>
-                </div>
-                
-                <div style="margin: 25px 0;">
-                    <h3><i class="fas fa-qrcode"></i> QR Code</h3>
-                    <div class="qr-placeholder">
-                        <div class="qr-image">
-                            <i class="fas fa-qrcode"></i>
-                        </div>
-                        <p>Scan to deposit</p>
-                    </div>
-                </div>
-                
-                <div style="background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 4px solid #ffa502;">
-                    <h3><i class="fas fa-exclamation-triangle"></i> Important Instructions</h3>
-                    <ul style="margin: 15px 0; padding-left: 20px;">
-                        <li>Use ONLY TRC20 network</li>
-                        <li>Minimum deposit: $50 USDT</li>
-                        <li>Network fee: ~1 USDT (paid by you)</li>
-                        <li>Send screenshot to WhatsApp after deposit</li>
-                        <li>Processing time: 2-6 hours</li>
-                    </ul>
-                </div>
+    <main class="deposit-container">
+        <div class="deposit-card">
+            <h1 style="color: #1a237e; margin-bottom: 10px;">
+                <i class="fas fa-qrcode"></i> Deposit USDT (TRC20)
+            </h1>
+            <p style="color: #666; margin-bottom: 30px;">Send USDT to the address below</p>
+            
+            <!-- Wallet Address -->
+            <div class="address-box">
+                <h3 style="color: #1a237e; margin-bottom: 15px;">
+                    <i class="fas fa-wallet"></i> Our TRC20 Address
+                </h3>
+                <code id="trc20Address">TDVgjumBKBZAG3AdKwnV7q9QJfQUzCEBNJ</code>
+                <button onclick="copyAddress()" class="copy-btn">
+                    <i class="fas fa-copy"></i> Copy Address
+                </button>
+                <p style="margin-top: 15px; color: #666; font-size: 0.9rem;">
+                    Network: <strong>TRC20 (Tron)</strong> | Minimum: $50 USDT
+                </p>
             </div>
             
-            <!-- Right: Deposit Form -->
-            <div class="deposit-right">
-                <h2><i class="fas fa-paper-plane"></i> Submit Deposit Details</h2>
-                <p>Fill this form after sending USDT</p>
+            <!-- Message Box -->
+            <div id="messageBox" class="message-box"></div>
+            
+            <!-- Deposit Form -->
+            <h2 style="color: #1a237e; margin: 30px 0 20px;">
+                <i class="fas fa-paper-plane"></i> Submit Deposit Details
+            </h2>
+            
+            <form id="depositForm">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="fullName" placeholder="Enter your full name" required>
+                </div>
                 
-                <form id="depositForm">
+                <div class="form-row">
                     <div class="form-group">
-                        <label>Full Name *</label>
-                        <input type="text" id="fullName" placeholder="Enter your full name" required>
+                        <label>Email Address *</label>
+                        <input type="email" id="email" placeholder="your@email.com" required>
                     </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Email Address *</label>
-                            <input type="email" id="email" placeholder="your@email.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label>WhatsApp Number *</label>
-                            <input type="tel" id="phone" placeholder="+1 (123) 456-7890" required>
-                        </div>
-                    </div>
-                    
                     <div class="form-group">
-                        <label>Deposit Amount (USDT) *</label>
-                        <input type="number" id="amount" min="50" step="0.01" placeholder="100.00" required>
-                        <small style="color: #666;">Minimum: $50 USDT</small>
+                        <label>WhatsApp Number *</label>
+                        <input type="tel" id="phone" placeholder="+1 (123) 456-7890" required>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Transaction ID (TXID) *</label>
-                        <input type="text" id="txid" placeholder="Enter transaction hash" required>
-                        <small style="color: #666;">Find in your wallet transaction history</small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Additional Notes (Optional)</label>
-                        <textarea id="notes" rows="3" placeholder="Any special instructions..."></textarea>
-                    </div>
-                    
-                    <div class="whatsapp-contact">
-                        <p><i class="fab fa-whatsapp"></i> <strong>Send Screenshot to:</strong></p>
-                        <p style="font-size: 1.2rem; margin: 5px 0;">+1 (862) 484-3253</p>
-                        <a href="https://wa.me/18624843253" target="_blank">Click to Open WhatsApp</a>
-                    </div>
-                    
-                    <div style="margin: 20px 0; padding: 15px; background: #e8f5e9; border-radius: 5px;">
-                        <input type="checkbox" id="terms" required style="width: auto; margin-right: 10px;">
-                        <label for="terms" style="display: inline;">I confirm I have sent USDT via TRC20 network</label>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-paper-plane"></i> Submit Deposit Request
-                    </button>
-                </form>
+                </div>
                 
-                <div id="message" style="margin-top: 20px; padding: 15px; border-radius: 5px; display: none;"></div>
-            </div>
+                <div class="form-group">
+                    <label>Deposit Amount (USDT) *</label>
+                    <input type="number" id="amount" min="50" step="0.01" placeholder="100.00" required>
+                    <small style="color: #666; display: block; margin-top: 5px;">Minimum: $50 USDT</small>
+                </div>
+                
+                <div class="form-group">
+                    <label>Transaction ID (TXID) *</label>
+                    <input type="text" id="txid" placeholder="Enter transaction hash" required>
+                    <small style="color: #666; display: block; margin-top: 5px;">Find in your wallet transaction history</small>
+                </div>
+                
+                <!-- WhatsApp Instructions -->
+                <div class="whatsapp-card">
+                    <h3 style="margin-bottom: 15px;">
+                        <i class="fab fa-whatsapp"></i> Important Step
+                    </h3>
+                    <p>After submitting this form, send transaction screenshot to:</p>
+                    <p style="font-size: 1.3rem; margin: 10px 0; font-weight: bold;">
+                        +1 (862) 484-3253
+                    </p>
+                    <p>Include your name and TXID in the message</p>
+                </div>
+                
+                <div style="margin: 25px 0; padding: 20px; background: #e8f5e9; border-radius: 8px;">
+                    <input type="checkbox" id="terms" required style="margin-right: 10px;">
+                    <label for="terms" style="display: inline;">I confirm I have sent USDT via TRC20 network and will send screenshot to WhatsApp</label>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Submit Deposit Request
+                </button>
+            </form>
         </div>
     </main>
 
     <script>
-        // Copy TRC20 Address
+        // Copy Address
         function copyAddress() {
             const address = "TDVgjumBKBZAG3AdKwnV7q9QJfQUzCEBNJ";
             navigator.clipboard.writeText(address)
                 .then(() => {
                     const btn = event.target;
+                    const original = btn.innerHTML;
                     btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
                     btn.style.background = '#4caf50';
                     setTimeout(() => {
-                        btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                        btn.innerHTML = original;
                         btn.style.background = '#1a237e';
                     }, 2000);
                 })
-                .catch(err => alert('Failed to copy address'));
+                .catch(err => {
+                    showMessage('Failed to copy address', 'error');
+                });
         }
         
         // Handle Form Submission
         document.getElementById('depositForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            console.log("Form submission started");
             
             // Get form data
             const depositData = {
@@ -180,13 +306,9 @@
                 phone: document.getElementById('phone').value.trim(),
                 amount: parseFloat(document.getElementById('amount').value),
                 txid: document.getElementById('txid').value.trim(),
-                notes: document.getElementById('notes').value.trim(),
                 date: new Date().toISOString(),
-                status: 'pending',
-                approvedDate: null
+                status: 'pending'
             };
-            
-            console.log("Deposit data:", depositData);
             
             // Validation
             if (depositData.amount < 50) {
@@ -194,24 +316,15 @@
                 return;
             }
             
-            if (!depositData.txid || depositData.txid.length < 10) {
-                showMessage('Please enter a valid transaction ID', 'error');
-                return;
-            }
-            
             // Save to localStorage
             try {
                 let deposits = JSON.parse(localStorage.getItem('deposits')) || [];
-                console.log("Existing deposits:", deposits.length);
-                
                 deposits.push(depositData);
                 localStorage.setItem('deposits', JSON.stringify(deposits));
                 
-                console.log("Data saved. Total deposits:", deposits.length);
-                
                 // Show success message
                 showMessage(`
-                    ✅ <strong>Deposit Submitted Successfully!</strong><br><br>
+                    ✅ <strong>Deposit Request Submitted!</strong><br><br>
                     <strong>Name:</strong> ${depositData.name}<br>
                     <strong>Amount:</strong> $${depositData.amount}<br>
                     <strong>TXID:</strong> ${depositData.txid.substring(0, 20)}...<br><br>
@@ -240,31 +353,24 @@
         
         // Show message
         function showMessage(msg, type) {
-            const messageDiv = document.getElementById('message');
-            messageDiv.innerHTML = msg;
-            messageDiv.style.display = 'block';
-            messageDiv.style.background = type === 'success' ? '#d4edda' : '#f8d7da';
-            messageDiv.style.color = type === 'success' ? '#155724' : '#721c24';
-            messageDiv.style.border = type === 'success' ? '1px solid #c3e6cb' : '1px solid #f5c6cb';
+            const messageBox = document.getElementById('messageBox');
+            messageBox.innerHTML = msg;
+            messageBox.className = 'message-box';
+            messageBox.style.display = 'block';
+            
+            if (type === 'success') {
+                messageBox.classList.add('message-success');
+            }
             
             // Auto-hide after 10 seconds
             setTimeout(() => {
-                messageDiv.style.display = 'none';
+                messageBox.style.display = 'none';
             }, 10000);
         }
         
-        // Test localStorage on page load
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             console.log("Deposit page loaded");
-            console.log("localStorage available:", typeof localStorage !== 'undefined');
-            
-            // Test localStorage
-            try {
-                localStorage.setItem('test', 'works');
-                console.log("localStorage test:", localStorage.getItem('test'));
-            } catch (e) {
-                console.error("localStorage error:", e);
-            }
         });
     </script>
 </body>
